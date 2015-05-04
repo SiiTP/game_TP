@@ -41,8 +41,8 @@ protected:
         staircasePolygon = world->CreateBody(staircaseDef);
         staircasePolygon->CreateFixture(stairCaseFixt);
 
-        setBrush(QBrush(QColor(Qt::cyan)));
-        setRect(-width / 2 - 4, -height / 2 - 4, width + 6, height + 6);
+        //setBrush(QBrush(QColor(Qt::cyan)));
+        //setRect(-width / 2 - 4, -height / 2 - 4, width + 6, height + 6);
     }
 };
 
@@ -54,7 +54,7 @@ public:
     }
     void render(QGraphicsScene *scene) {
         scene->addItem(this);
-        QGraphicsPixmapItem *staircasePicture = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircase_small.png"));
+        staircasePicture = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircases/custom/staircaseSmall.png"));
         staircasePicture->setPos(x - width / 2, y - height / 2);
     }
 };
@@ -66,8 +66,7 @@ public:
     }
     void render(QGraphicsScene *scene) {
         scene->addItem(this);
-        QGraphicsPixmapItem *staircasePicture =
-                scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircase_medium.png"));
+        staircasePicture = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircases/custom/staircaseMedium.png"));
         staircasePicture->setPos(x - width / 2, y - height / 2);
     }
 };
@@ -79,8 +78,8 @@ public:
     }
     void render(QGraphicsScene *scene) {
         scene->addItem(this);
-        QGraphicsPixmapItem *staircasePicture =
-                scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircase_large.png"));
+
+        staircasePicture = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircases/custom/staircaseLarge.png"));
         staircasePicture->setPos(x - width / 2, y - height / 2);
     }
 };
@@ -92,8 +91,7 @@ public:
     }
     void render(QGraphicsScene *scene) {
         scene->addItem(this);
-        QGraphicsPixmapItem *staircasePicture =
-                scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircase_xlarge.png"));
+        staircasePicture = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/staircases/custom/staircaseXlarge.png"));
         staircasePicture->setPos(x - width / 2, y - height / 2);
     }
 };

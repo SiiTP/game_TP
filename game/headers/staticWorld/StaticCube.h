@@ -1,10 +1,9 @@
 //простой кубик
 class StaticCube : public QGraphicsRectItem {
     public:
-        static const float MetrKoefficient = 30.0f;
-        b2Body *cubeBody;
         StaticCube(b2World *world, float x, float y) {
-
+            this->x = x;
+            this->y = y;
             //определение тела
             b2BodyDef *cubeDef = new b2BodyDef();
             cubeDef->position.Set(-x / MetrKoefficient, -y / MetrKoefficient);
@@ -24,21 +23,36 @@ class StaticCube : public QGraphicsRectItem {
             cubeBody = world->CreateBody(cubeDef);
             cubeBody->CreateFixture(cubeFixt);
 
-            setBrush(QBrush(QColor(Qt::red)));
+            //setBrush(QBrush(QColor(Qt::red)));
 
-            setRect(-size / 2, -size / 2, size, size); //отрисовка, начало сдвигаем в левый верхний угол
+            //setRect(-size / 2, -size / 2, size, size); //отрисовка, начало сдвигаем в левый верхний угол
         }
 
         StaticCube(){};
 
+        float getX() {
+            return x;
+        }
+        float getY() {
+            return y;
+        }
         static float getSize() {
             return size;
         }
         static float getReverseSize() {
             return 1.0f / size;
         }
+        QGraphicsPixmapItem* getCubePicture() {
+            return cubePicture;
+        }
+
 private:
-        static const float size = 10;
+        float x;
+        float y;
+        static const float MetrKoefficient = 30.0f;
+        b2Body *cubeBody;
+        QGraphicsPixmapItem *cubePicture;
+        static const float size = 20;
 };
 
 
