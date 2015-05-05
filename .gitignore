@@ -1,0 +1,7 @@
+*.pro*
+*.autosave
+*-Desktop-Debug
+/Box2D_v2.3.0/*
+*.swp
+game_global.h
+/project_sprites/Z_other/*
