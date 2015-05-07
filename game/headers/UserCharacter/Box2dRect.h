@@ -1,17 +1,14 @@
  #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0)
 const float SCALETOPIXEL = 50;
+//const float32 timeStep = 1.0f/60.0f;
+
+const int32 velocityIterations = 6;
+const int32 positionIterations = 2;
 using namespace std;
 class MyRect : public QGraphicsRectItem {
 public:
-    int xx,yy;
-    float32 timeStep = 1.0f/60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
-    b2World* world;
-    b2Body* body;
-    string name;
-    bool isStatic = false;
 
+    //это userData
     ObjectInfo *info = new ObjectInfo("character");
 
     MyRect(b2World* world) {
@@ -42,12 +39,12 @@ public:
         this->world = world;
         b2BodyDef bodyDef;
         if (!isstatic) {
-        bodyDef.type = b2_dynamicBody;
+            bodyDef.type = b2_dynamicBody;
         }
         float yy = y/SCALETOPIXEL;
         float xx = x/SCALETOPIXEL;
         bodyDef.position.Set(-xx,-yy);
-        bodyDef.fixedRotation = true;
+        bodyDef.fixedRotation = true; //отключение вращения
         setPos(x,y);
         b2Body* body = world->CreateBody(&bodyDef);
         this->body = body;
@@ -55,7 +52,6 @@ public:
         yy = height/SCALETOPIXEL/2;
         xx = width/SCALETOPIXEL/2;
         dynamicBox.SetAsBox(xx,yy);
-
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
@@ -82,22 +78,26 @@ public:
 
         world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = body->GetPosition();
-        //cout <<name << " " << position.x*SCALETOPIXEL << ' ' << position.y*SCALETOPIXEL << endl;
-      // cout <<name << " " << position.x << ' ' << position.y << endl;
-      // cout <<name << " " << x() << ' ' << y() << endl;
 
-        float32 angle = body->GetAngle();
-         angle = RADIANS_TO_DEGREES(angle);
-        while (angle <= 0){
-           angle += 360;
-        }
-        while (angle > 360){
-           angle -= 360;
-        }
-
-      // cout <<name<< ' ' << angle << endl;
-       //????setTransformOriginPoint(rect().width()/2,rect().height()/2);
-       setRotation(angle);
-       setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
+        //отключил вращение
+//        float32 angle = body->GetAngle();
+//        angle = RADIANS_TO_DEGREES(angle);
+//        while (angle <= 0){
+//           angle += 360;
+//        }
+//        while (angle > 360){
+//           angle -= 360;
+//        }
+//        setRotation(angle);
+        setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
     }
+protected:
+    b2Body* body;
+private:
+    int xx,yy;
+
+    b2World* world;
+
+    string name;
+    bool isStatic = false;
 };

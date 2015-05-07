@@ -1,3 +1,5 @@
+static const float timeStep = 1.0f / 60.0f;
+
 //стандартные библиотеки
 #include <iostream>
 #include <string>
@@ -39,11 +41,10 @@ using std::cout;
 static const int32 worldWidth  = 1000;
 static const int32 worldHeight = 500;
 
-static const float32 timeStep = 1.0f / 60.0f;
 
 int main(int argc, char** argv) {
     //создание box2d мира
-    b2Vec2 gravity(0.0f, -20.0f);
+    b2Vec2 gravity(0.0f, -15.0f);
     b2World world(gravity);
 
     //создание qt мира
@@ -106,7 +107,7 @@ int main(int argc, char** argv) {
     wall4->render(scene);
     Wall *wall5 = new Wall(&world, 810, 130, 140);
     wall5->render(scene);
-    Character *character1 = new Character(&world, 200, 270);
+    Character *character1 = new Character(&world, 205, 270);
     scene->addItem(character1);
     Borders *borders = new Borders(&world, worldWidth, worldHeight);
     borders->render(scene);

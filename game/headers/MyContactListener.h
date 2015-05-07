@@ -1,4 +1,6 @@
 #include <Box2D/Dynamics/Contacts/b2Contact.h>
+
+//попытка сравнивать типы через шаблоны, не удаляй пока
 /*template <class T1, class T2>
 struct Same_types {
     enum {value = 0};
@@ -22,28 +24,23 @@ void BeginContact(b2Contact *contact) {
    b2Fixture *objB = contact->GetFixtureB();
    ObjectInfo *infoA = (ObjectInfo*)objA->GetUserData();
    ObjectInfo *infoB = (ObjectInfo*)objB->GetUserData();
-   //cout << "type of object A : " << infoA->objectType << endl;
-   //cout << "type of object B : " << infoB->objectType << endl;
+
+   //лестницы создавались раньше персонажа, поэтому лестница - всегда объект А, позже сделаю полноценную проверку
    if (infoA->isStaircase && infoB->isCharacter) {
        cout << "collision staircase + character\n";
+
+       //эхо печать, кстати по фикстуру можно само тело получать__________________
        b2Body *body1 = objA->GetBody();
        const b2Vec2 vec1 = body1->GetPosition();
        cout << "staircasePosition : (" << vec1.x * 50 << " : " << vec1.y * 50 << ")\n";
        b2Body *body2 = objB->GetBody();
        const b2Vec2 vec2 = body2->GetPosition();
        cout << "CharacterPosition : (" << vec2.x * 50 << " : " << vec2.y * 50 << ")\n";
+       //_________________________________________________________________________
+
        infoB->characterInStaircase = true;
 
    }
-
-//    cout << "type of object A : " << (char *)objA->GetUserData() << endl;
-//    cout << "type of object B : " << (char *)objB->GetUserData() << endl;
-//   if (objA->IsSensor()) {
-//       b2Body *charact = objB->GetBody();
-//       charact->SetType(b2_kinematicBody);
-//        cout << "contact with staircase\n";
-//        charact->SetAwake(true);
-//    }
 }
 
 void EndContact(b2Contact *contact) {
@@ -64,9 +61,5 @@ void EndContact(b2Contact *contact) {
         cout << "CharacterPosition : (" << vec2.x * 50 << " : " << vec2.y * 50 << ")\n";
         infoB->characterInStaircase = false;
     }
-//    if ((char *)objA->GetUserData() == "staircase" && (char *)objB->GetUserData() == "character") {
-//        b2Body *charact = objB->GetBody();
-//        charact->SetType(b2_dynamicBody);
-//    }
 }
 };

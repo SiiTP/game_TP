@@ -142,7 +142,7 @@ public:
 
         float32 impulsepower = 6.0f*jumpPower;
         if (inflight == false) {
-            if (event->key() == 'S') {
+            if (event->key() == 'S') { //движение вниз
                 if (info->characterInStaircase == true) {
                     body->SetType(b2_kinematicBody);
                     body->SetLinearVelocity(b2Vec2(0, -0.5 * impulsepower));
@@ -153,7 +153,7 @@ public:
                 if (info->characterInStaircase == true) {
                     cout << "character is kinematic body\n";
                     body->SetType(b2_kinematicBody);
-                    body->SetLinearVelocity(b2Vec2(0, 0.5 * impulsepower));
+                    body->SetLinearVelocity(b2Vec2(0, 0.5 * impulsepower)); //кинематике надо скорость задавать а не импульс
                     //body->ApplyLinearImpulse(b2Vec2(0,impulsepower),body->GetWorldCenter(),true);
                     bv.x = 0;
                 }
@@ -185,9 +185,7 @@ public:
             case 'A':
                 if (inflight == false) {
                     body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
-
                     bv.x = 0;
-
                 }
                 break;
             case 'W':
@@ -205,7 +203,7 @@ public:
         MyRect::advance(phase);
         spr->setPos(x(),y());
         if (info -> characterInStaircase == false) {
-            body->SetType(b2_dynamicBody);
+            body->SetType(b2_dynamicBody); //если не на лестнице персонаж
         }
         if (fabs(body->GetLinearVelocity().y)>precision && info -> characterInStaircase == false) {
             spr->jump(isLeftDirection);
