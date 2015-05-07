@@ -11,18 +11,13 @@
 #include <QBrush>
  #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0)
 const float SCALETOPIXEL = 50;
+const float32 timeStep = 1.0f/60.0f;
+
+const int32 velocityIterations = 6;
+const int32 positionIterations = 2;
 using namespace std;
 class MyRect : public QGraphicsRectItem {
 public:
-    int xx,yy;
-    float32 timeStep = 1.0f/60.0f;
-
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
-    b2World* world;
-    b2Body* body;
-    string name;
-    bool isStatic = false;
     MyRect(b2World* world) {
         this->world = world;
         b2BodyDef bodyDef;
@@ -50,7 +45,7 @@ public:
         this->world = world;
         b2BodyDef bodyDef;
         if (!isstatic) {
-        bodyDef.type = b2_dynamicBody;
+            bodyDef.type = b2_dynamicBody;
         }
         float yy = y/SCALETOPIXEL;
         float xx = x/SCALETOPIXEL;
@@ -60,14 +55,12 @@ public:
         this->body = body;
         b2PolygonShape dynamicBox;
         yy = height/SCALETOPIXEL/2;
-         xx = width/SCALETOPIXEL/2;
+        xx = width/SCALETOPIXEL/2;
         dynamicBox.SetAsBox(xx,yy);
-
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.5f;
-
         body->CreateFixture(&fixtureDef);
         setBrush(QBrush(QColor(Qt::gray)));
         setRect(-width/2,-height/2,width,height);
@@ -83,24 +76,26 @@ public:
     void advance(int phase){
         if (!phase) return;
 
-       world->Step(timeStep, velocityIterations, positionIterations);
+        world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = body->GetPosition();
-        //cout <<name << " " << position.x*SCALETOPIXEL << ' ' << position.y*SCALETOPIXEL << endl;
-      // cout <<name << " " << position.x << ' ' << position.y << endl;
-      // cout <<name << " " << x() << ' ' << y() << endl;
-
         float32 angle = body->GetAngle();
-         angle = RADIANS_TO_DEGREES(angle);
+        angle = RADIANS_TO_DEGREES(angle);
         while (angle <= 0){
            angle += 360;
         }
         while (angle > 360){
            angle -= 360;
         }
-
-      // cout <<name<< ' ' << angle << endl;
-       //????setTransformOriginPoint(rect().width()/2,rect().height()/2);
-       setRotation(angle);
-       setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
+        setRotation(angle);
+        setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
     }
+protected:
+    b2Body* body;
+private:
+    int xx,yy;
+
+    b2World* world;
+
+    string name;
+    bool isStatic = false;
 };
