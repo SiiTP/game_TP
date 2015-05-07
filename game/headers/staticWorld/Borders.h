@@ -8,20 +8,20 @@ public:
         float revSize = a->getReverseSize();
         //заполнение идет по часовой стрелке с начала координат
         for (int i = 0; i < width * revSize - 1; ++i) {
-            StaticCube *upBorders    = new StaticCube(world,   size * i + size / 2,   size / 2           );
-            cubes.push_back(upBorders);
+            //upBorder
+            cubes.push_back(new StaticCube(world,   size * i + size / 2,   size / 2           ));
         }
         for (int i = 1; i < height * revSize - 1; ++i) {
-            StaticCube *rightBorders = new StaticCube(world,   width - size / 2,      size * i + size / 2);
-            cubes.push_back(rightBorders);
+            //rightBorder
+            cubes.push_back(new StaticCube(world,   width - size / 2,      size * i + size / 2));
         }
         for (int i = width * revSize - 2; i >= 0; --i) {
-            StaticCube *downBorders  = new StaticCube(world,   size * i + size / 2,   height - size / 2  );
-            cubes.push_back(downBorders);
+            //downBorder
+            cubes.push_back(new StaticCube(world,   size * i + size / 2,   height - size / 2  ));
         }
         for (int i = height * revSize - 2; i > 0 ; --i) {
-            StaticCube *leftBorders  = new StaticCube(world,   size / 2,              size * i + size / 2);
-            cubes.push_back(leftBorders);
+            //leftBorder
+            cubes.push_back(new StaticCube(world,   size / 2,              size * i + size / 2));
         }
     }
     //~Borders() {};

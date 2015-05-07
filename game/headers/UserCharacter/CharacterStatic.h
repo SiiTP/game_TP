@@ -1,10 +1,7 @@
-#ifndef CHARACTERSTATIC_H
-#define CHARACTERSTATIC_H
 
-#endif // CHARACTERSTATIC_H
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
-#include <Box2dRect.h>
+#include <./headers/UserCharacter/Box2dRect.h>
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -20,7 +17,7 @@ class Sprite {
 public:
     Sprite(QGraphicsRectItem* item) : drawitem(item) {
 
-        moveSpritesPath = "/home/ivan/QTProjects/sprite/NormalGear/";
+        moveSpritesPath = "/home/ivan/TP_GameProject_CPP/project_sprites/sprite/NormalGear/";
         QDir qd(moveSpritesPath);
         QStringList qls;
 
@@ -134,11 +131,10 @@ private:
 
 class Character: public MyRect{
 public:
-    Character(b2World* world,float x,float y) :MyRect(world,55,80,300,400,"character1") {
+    Character(b2World* world,float x,float y) :MyRect(world,55,78,x,y,"character1") {
         setFlag(QGraphicsItem::ItemIsFocusable,true);
         setFocus();
         spr = new Sprite(this);
-
 
     }
 
@@ -146,19 +142,38 @@ public:
 
         float32 impulsepower = 6.0f*jumpPower;
         if (inflight == false) {
+            if (event->key() == 'S') {
+                if (info->characterInStaircase == true) {
+                    body->SetType(b2_kinematicBody);
+                    body->SetLinearVelocity(b2Vec2(0, -0.5 * impulsepower));
+                }
+            }
             if (event->key() == 'W') {
+
+                if (info->characterInStaircase == true) {
+                    cout << "character is kinematic body\n";
+                    body->SetType(b2_kinematicBody);
+                    body->SetLinearVelocity(b2Vec2(0, 0.5 * impulsepower));
+                    //body->ApplyLinearImpulse(b2Vec2(0,impulsepower),body->GetWorldCenter(),true);
+                    bv.x = 0;
+                }
+                else {
+                    cout << "character is dynamic body\n";
+                    body->SetType(b2_dynamicBody);
                     body->ApplyLinearImpulse(b2Vec2(0,impulsepower),body->GetWorldCenter(),true);
                     bv.x = 0;
+                }
+
             }else {
 
                 if (event->key() == 'A') {
-                    bv.x = 3.0f*speed;
+                    bv.x = 6.0f*speed;
                     isLeftDirection = LEFT;
                     body->SetLinearVelocity(bv);
                 }
                 if (event->key() == 'D') {
                     isLeftDirection = RIGHT;
-                    bv.x = -3.0f*speed;
+                    bv.x = -6.0f*speed;
                     body->SetLinearVelocity(bv);
                 }
             }
@@ -189,14 +204,17 @@ public:
     void advance(int phase) {
         MyRect::advance(phase);
         spr->setPos(x(),y());
-        if (fabs(body->GetLinearVelocity().y)>precision) {
+        if (info -> characterInStaircase == false) {
+            body->SetType(b2_dynamicBody);
+        }
+        if (fabs(body->GetLinearVelocity().y)>precision && info -> characterInStaircase == false) {
             spr->jump(isLeftDirection);
             inflight = true;
         }
         else {
             inflight = false;
             if (fabs(bv.x) > 0) {
-                cout << bv.x << endl;
+                //cout << bv.x << endl;
                 spr->move(isLeftDirection);
             }else {
                 spr->stand(isLeftDirection);
@@ -204,12 +222,9 @@ public:
         }
 
     }
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-       // nothing here
-    }
 
 private:
-    static const float precision = 0.002;
+    static const float precision = 0.02;
     bool isLeftDirection;
     b2Vec2 bv;
     float speed = 1;

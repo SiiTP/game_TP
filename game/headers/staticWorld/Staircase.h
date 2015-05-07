@@ -5,18 +5,20 @@
 #define STAIRCASE_LARGE_HEIGHT  200.0f
 #define STAIRCASE_XLARGE_HEIGHT 300.0f
 
+#include <Box2D/Box2D.h>
+
 class Staircase : public QGraphicsRectItem {
 public:
     virtual void render(QGraphicsScene *) = 0;
 protected:
+
     float const width = 60.0f;
     float height;
     float x;
     float y;
     b2Body *staircasePolygon;
     QGraphicsPixmapItem *staircasePicture;
-    static const float MetrKoefficient = 30.0f;
-
+    static const float MetrKoefficient = 50.0f;
     Staircase(b2World *world, float x, float y, float height) {
         this->x = x;
         this->y = y;
@@ -29,20 +31,27 @@ protected:
 
         //оболочка
         b2PolygonShape *staircaseShape = new b2PolygonShape();
-        staircaseShape->SetAsBox(width / MetrKoefficient / 2, height / MetrKoefficient / 2);
+        staircaseShape->SetAsBox(width / MetrKoefficient / 8, height / MetrKoefficient / 2);
 
         //физические свойства
-        b2FixtureDef *stairCaseFixt = new b2FixtureDef();
-        stairCaseFixt->shape = staircaseShape;
-        stairCaseFixt->friction = 0.9;
-        stairCaseFixt->density  = 1;
+        b2FixtureDef *staircaseFixt = new b2FixtureDef();
+        staircaseFixt->shape = staircaseShape;
+        staircaseFixt->friction = 0.9;
+        staircaseFixt->density  = 1;
+        staircaseFixt->isSensor = true;
+
+        //для обработки столкновений
+        ObjectInfo *info = new ObjectInfo("staircase");
+        info->isStaircase = true;
+        staircaseFixt->userData = info;
+        //__________________________
 
         //добавление в мир
         staircasePolygon = world->CreateBody(staircaseDef);
-        staircasePolygon->CreateFixture(stairCaseFixt);
+        staircasePolygon->CreateFixture(staircaseFixt);
 
         //setBrush(QBrush(QColor(Qt::cyan)));
-        //setRect(-width / 2 - 4, -height / 2 - 4, width + 6, height + 6);
+        //setRect(-width / 2, -height / 2, width/2, height);
     }
 };
 

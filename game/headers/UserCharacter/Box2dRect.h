@@ -1,14 +1,3 @@
-#ifndef BOX2DRECT_H
-#define BOX2DRECT_H
-
-#endif // BOX2DRECT_H
-#include <QGraphicsRectItem>
-#include <iostream>
-#include <Box2D/Box2D.h>
-#include <Box2D/Dynamics/b2World.h>
-#include <string>
-#include <QTransform>
-#include <QBrush>
  #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0)
 const float SCALETOPIXEL = 50;
 using namespace std;
@@ -16,14 +5,17 @@ class MyRect : public QGraphicsRectItem {
 public:
     int xx,yy;
     float32 timeStep = 1.0f/60.0f;
-
     int32 velocityIterations = 6;
     int32 positionIterations = 2;
     b2World* world;
     b2Body* body;
     string name;
     bool isStatic = false;
+
+    ObjectInfo *info = new ObjectInfo("character");
+
     MyRect(b2World* world) {
+
         this->world = world;
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
@@ -35,7 +27,7 @@ public:
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
+        fixtureDef.friction = 0.33f;
 
         body->CreateFixture(&fixtureDef);
 
@@ -55,18 +47,23 @@ public:
         float yy = y/SCALETOPIXEL;
         float xx = x/SCALETOPIXEL;
         bodyDef.position.Set(-xx,-yy);
+        bodyDef.fixedRotation = true;
         setPos(x,y);
         b2Body* body = world->CreateBody(&bodyDef);
         this->body = body;
         b2PolygonShape dynamicBox;
         yy = height/SCALETOPIXEL/2;
-         xx = width/SCALETOPIXEL/2;
+        xx = width/SCALETOPIXEL/2;
         dynamicBox.SetAsBox(xx,yy);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.5f;
+        //для обработки столкновений
+        info->isCharacter = true;
+        fixtureDef.userData = info;
+        //__________________________
 
         body->CreateFixture(&fixtureDef);
         setBrush(QBrush(QColor(Qt::gray)));
@@ -83,7 +80,7 @@ public:
     void advance(int phase){
         if (!phase) return;
 
-       world->Step(timeStep, velocityIterations, positionIterations);
+        world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = body->GetPosition();
         //cout <<name << " " << position.x*SCALETOPIXEL << ' ' << position.y*SCALETOPIXEL << endl;
       // cout <<name << " " << position.x << ' ' << position.y << endl;
