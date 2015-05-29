@@ -12,10 +12,12 @@ public:
     void setDamage(unsigned int dam) { damage = dam;}
     void setMagazine(unsigned int count) { magazine = count;}
     void setDelay(unsigned int delay) { attackdelay = delay;}
-    virtual void attack() = 0;
+    virtual void attack(float x,float y,b2Vec2 direction) = 0;
 protected:
-    b2Fixture* fixture;
+   // b2FixtureDef fixture;
+    //b2BodyDef body;
     b2Body* body;
+    b2Fixture* fixture;
     b2World* world;
 private:
     int magazine;
@@ -29,6 +31,23 @@ private:
 class Gun: public Weapon, public QGraphicsEllipseItem {
 public:
     Gun(b2World* world,float x, float y, float bulletsize) {
+        /*this->world = world;
+        radius = bulletsize;
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_dynamicBody;
+
+        body = bodyDef;
+        b2CircleShape dynamicCircle;
+        radius = bulletsize/SCALETOPIXEL/2;
+
+        dynamicCircle.m_radius = radius;
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &dynamicCircle;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.5f;
+
+        fixture = fixtureDef;*/
         this->world = world;
         radius = bulletsize;
         b2BodyDef bodyDef;
@@ -48,7 +67,9 @@ public:
         fixtureDef.shape = &dynamicCircle;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.5f;
-
+        ObjectInfo *info = new ObjectInfo("bullet");
+        info->isCube = true;
+        fixtureDef.userData = info;
         fixture = body->CreateFixture(&fixtureDef);
         setBrush(QBrush(QColor(Qt::gray)));
         //setRect(-bulletsize/2,-bulletsize/2,bulletsize,bulletsize);
@@ -56,12 +77,12 @@ public:
         setAcceptHoverEvents(true);
     }
     void advance(int phase){
-        world->Step(timeStep, velocityIterations, positionIterations);
+       //world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = body->GetPosition();
         setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
     }
 
-    void attack() { }
+    void attack(float x,float y,b2Vec2 direction) { }
 private:
     float radius;
 };

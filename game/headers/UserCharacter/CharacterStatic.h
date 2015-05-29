@@ -1,7 +1,7 @@
 
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
-#include <./headers/UserCharacter/Box2dRect.h>
+#include "Box2dRect.h"
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -10,14 +10,16 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QDir>
-
+#include <iostream>
 #define LEFT 1
 #define RIGHT 0
+
+//
 class Sprite {
 public:
     Sprite(QGraphicsRectItem* item) : drawitem(item) {
 
-        moveSpritesPath = "/home/ivan/TP_GameProject_CPP/project_sprites/sprite/NormalGear/";
+        moveSpritesPath = "/home/ivan/QTProjects/TPproject/project_sprites/sprite/NormalGear/";
         QDir qd(moveSpritesPath);
         QStringList qls;
 
@@ -47,10 +49,10 @@ public:
     }
 
      void move(bool isLeft) {
-        if (lastchange == 0) {
-            lastchange = QDateTime::currentMSecsSinceEpoch();
-        }
-        else if ((QDateTime::currentMSecsSinceEpoch() -lastchange) > 40) {
+            if (lastchange == 0) {
+                lastchange = QDateTime::currentMSecsSinceEpoch();
+            }
+            else if ((QDateTime::currentMSecsSinceEpoch() -lastchange) > 40) {
 
 
             if (qgp == NULL) {
@@ -131,7 +133,7 @@ private:
 
 class Character: public MyRect{
 public:
-    Character(b2World* world,float x,float y) :MyRect(world,55,78,x,y,"character1") {
+    Character(b2World* world,float x,float y) :MyRect(world,50,78,x,y,"character1") {
         setFlag(QGraphicsItem::ItemIsFocusable,true);
         setFocus();
         spr = new Sprite(this);
@@ -179,6 +181,10 @@ public:
             }
         }
     }
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0) {
+
+    }
+
     void keyReleaseEvent(QKeyEvent *event) {
         switch (event->key()) {
             case 'D':
@@ -195,10 +201,11 @@ public:
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) {
-        cout << "HERE11"<<hasFocus() << endl;
+       // std::cout << event->pos().x() << ' ' << event->pos().y() << std::endl;
         setFocus();
 
     }
+
     void advance(int phase) {
         MyRect::advance(phase);
         spr->setPos(x(),y());

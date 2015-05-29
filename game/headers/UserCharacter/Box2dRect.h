@@ -7,32 +7,10 @@ const int32 positionIterations = 2;
 using namespace std;
 class MyRect : public QGraphicsRectItem {
 public:
-
     //это userData
     ObjectInfo *info = new ObjectInfo("character");
 
     MyRect(b2World* world) {
-
-        this->world = world;
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_dynamicBody;
-        bodyDef.position.Set(4.0f,6.0f);
-        b2Body* body = world->CreateBody(&bodyDef);
-        this->body = body;
-        b2PolygonShape dynamicBox;
-        dynamicBox.SetAsBox(3.0f,3.0f);
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &dynamicBox;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.33f;
-
-        body->CreateFixture(&fixtureDef);
-
-        xx = 4*SCALETOPIXEL;
-        yy =6*SCALETOPIXEL;
-        setAcceptHoverEvents(true);
-        setRect(xx,yy,3*SCALETOPIXEL,3*SCALETOPIXEL);
-        setBrush(QBrush(QColor(Qt::gray)));
     }
     MyRect(b2World* world,float width,float height, float x ,float y,string name, bool isstatic = false) {
         this->name = name;
@@ -68,10 +46,7 @@ public:
     }
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event){
-        b2Vec2 position = body->GetPosition();
-        cout <<name << " " << position.x << ' ' << position.y << endl;
-        body->ApplyLinearImpulse(b2Vec2(0,4.0f),body->GetWorldCenter(),true);
-        cout <<name << " " << x() << ' ' << y() << endl;
+
     }
     void advance(int phase){
         if (!phase) return;
@@ -79,16 +54,6 @@ public:
         world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = body->GetPosition();
 
-        //отключил вращение
-//        float32 angle = body->GetAngle();
-//        angle = RADIANS_TO_DEGREES(angle);
-//        while (angle <= 0){
-//           angle += 360;
-//        }
-//        while (angle > 360){
-//           angle -= 360;
-//        }
-//        setRotation(angle);
         setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
     }
 protected:
