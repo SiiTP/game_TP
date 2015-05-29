@@ -1,7 +1,7 @@
 
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
-#include <./headers/UserCharacter/Box2dRect.h>
+#include <./headers/UserCharacter/Box2dRect.cpp>
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -13,6 +13,7 @@
 
 #define LEFT 1
 #define RIGHT 0
+
 class Sprite {
 public:
     Sprite(QGraphicsRectItem* item) : drawitem(item) {
@@ -167,13 +168,13 @@ public:
             }else {
 
                 if (event->key() == 'A') {
-                    bv.x = 6.0f*speed;
+                    bv.x = speedKoeficient * speed;
                     isLeftDirection = LEFT;
                     body->SetLinearVelocity(bv);
                 }
                 if (event->key() == 'D') {
                     isLeftDirection = RIGHT;
-                    bv.x = -6.0f*speed;
+                    bv.x = -speedKoeficient * speed;
                     body->SetLinearVelocity(bv);
                 }
             }

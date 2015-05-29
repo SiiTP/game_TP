@@ -1,50 +1,22 @@
-static const float timeStep = 1.0f / 60.0f;
-
-//стандартные библиотеки
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <vector>
-using std::string;
-using std::cout;
-
-//библиотеки от QT
-#include <QGraphicsRectItem>
-#include <QTransform>
-#include <QApplication>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QTimer>
-#include <QObject>
-#include <QMouseEvent>
-#include <QBrush>
-
-
-//библиотеки от box2D
-#include <Box2D/Box2D.h>
-#include <Box2D/Dynamics/b2World.h>
+#include <./headers/AllLibraries.h>
+#include <./headers/Constants.h>
+#include <./headers/Pathes.cpp>
 
 //пользовательские файлы
 #include "./headers/ObjectInfo.h"
 #include "./headers/MyView.h"
 
-#include "./headers/staticWorld/StaticCube.h"
-#include "./headers/staticWorld/StaticElement.h"
-#include "./headers/staticWorld/Borders.h"
-#include "./headers/staticWorld/Floor.h"
-#include "./headers/staticWorld/Wall.h"
-#include "./headers/staticWorld/Staircase.h"
-#include "./headers/UserCharacter/CharacterStatic.h"
-#include "./headers/MyContactListener.h"
-
-//параметры мира, должны быть кратны 10, чтобы границы мира были ровными
-static const int32 worldWidth  = 1000;
-static const int32 worldHeight = 500;
-
+#include "./headers/staticWorld/StaticElement.cpp"
+#include "./headers/staticWorld/Borders.cpp"
+#include "./headers/staticWorld/Floor.cpp"
+#include "./headers/staticWorld/Wall.cpp"
+#include "./headers/staticWorld/Staircase.cpp"
+#include "./headers/UserCharacter/CharacterStatic.cpp"
+#include "./headers/MyContactListener.cpp"
 
 int main(int argc, char** argv) {
     //создание box2d мира
-    b2Vec2 gravity(0.0f, -15.0f);
+    b2Vec2 gravity(0.0f, GRAVITY);
     b2World world(gravity);
 
     //создание qt мира
@@ -53,7 +25,8 @@ int main(int argc, char** argv) {
     QApplication a(argc,argv);
     QGraphicsScene* scene= new QGraphicsScene(0, 0, worldWidth, worldHeight);
     MyView view;
-    QPixmap pict("/home/ivan/TP_GameProject_CPP/project_sprites/backgrounds/background1.jpg");
+
+    QPixmap pict(generatePath(PATH_PROJECT, PATH_BACKGROUND, F_BACKGROUND));
     view.setBackgroundBrush(QBrush(pict));
 
     //заполнение статикой

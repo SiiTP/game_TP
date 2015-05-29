@@ -95,9 +95,7 @@ protected:
     b2Body* body;
 private:
     int xx,yy;
-
     b2World* world;
-
     string name;
     bool isStatic = false;
 };

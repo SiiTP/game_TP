@@ -1,3 +1,6 @@
+#include "./headers/staticWorld/StaticCube.cpp"
+#include "./headers/AllLibraries.h"
+
 class StaticElement {
 protected:
     std::vector<StaticCube*> cubes;
@@ -8,11 +11,8 @@ public:
             float x = cubes[i]->getX();
             float y = cubes[i]->getY();
             QGraphicsPixmapItem *buf = cubes[i]->getCubePicture();
-            buf = scene->addPixmap(QPixmap("/home/ivan/TP_GameProject_CPP/project_sprites/walls/cube1_20px"));
+            buf = scene->addPixmap(QPixmap(generatePath(PATH_PROJECT, PATH_CUBE, F_CUBE2)));
             buf->setPos(x - size / 2,y - size / 2);
-            //std::swap(buf, cubes[i]->getCubePicture());
-            //scene->addItem(cubes[i]);
         }
     }
-    // ~StaticElement() {}; //делает класс абстрактным
 };

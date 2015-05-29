@@ -12,7 +12,6 @@ public:
             cubes.push_back(cube);
         }
     }
-
 private:
     float beginX;
     float beginY;
