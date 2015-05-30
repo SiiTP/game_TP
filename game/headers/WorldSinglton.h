@@ -4,7 +4,7 @@
 #endif // WORLDSINGLTON_H
 #include <Box2D/Dynamics/b2World.h>
 
-
+//singleton for world
 class WorldSinglton {
 public:
     static b2World* instance() {

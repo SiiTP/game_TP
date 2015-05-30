@@ -50,8 +50,8 @@ public:
         b2Vec2 position = body->GetPosition();
         setPos(-position.x*SCALETOPIXEL,-position.y*SCALETOPIXEL);
     }
+
     void performAction(float beginx,float beginy,float endx,float endy,QGraphicsScene* scene) {
-        std::cout << " HERE WE GO" << beginx << " " <<beginy << " "<< endx  << " "<< endy << std::endl;
         float yy = beginy/SCALETOPIXEL;
         float xx = beginx/SCALETOPIXEL;
         bodydef.position.Set(-xx,-yy);

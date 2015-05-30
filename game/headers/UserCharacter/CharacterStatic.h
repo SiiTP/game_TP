@@ -14,6 +14,8 @@
 #define RIGHT 0
 
 //спрайт персонажа
+//На входе дается квадрат персонажа, поверх которого орисовывается спрайт
+//Персонаж на действия пользователя вызывает методы спрайта, который сам определяет как отрисовывать
 class Sprite {
 public:
     Sprite(QGraphicsRectItem* item) : drawitem(item) {
@@ -112,7 +114,6 @@ public:
 
 private:
     QGraphicsRectItem* drawitem;
-
     int currentFrame = 1;
 
     std::vector<QPixmap> moveSpriteRight;
@@ -131,6 +132,10 @@ private:
 
 // Наследуется от класса, который рисует квадрат, что является основой персонажа,
 // поверх чего рисуется спрайт
+//Pattern: Adapter ??
+//?Для выстрела необходимо положение персонажа+ положение мыши
+//?Метод attack принимает положение мыши + сцену, куда рисовать, затем
+//?высчитывает свои координаты и передает в класс оружия
 class Character: public MyRect{
 public:
     Character(b2World* world,float x,float y) :MyRect(world,50,78,x,y,"character1") {
