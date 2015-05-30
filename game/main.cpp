@@ -35,6 +35,7 @@ using std::cout;
 #include "./headers/staticWorld/Wall.h"
 #include "./headers/staticWorld/Staircase.h"
 #include "./headers/MyContactListener.h"
+#include "./headers/UserCharacter/CharacterStatic.h"
 #include "./headers/Weapons/weapon.h"
 #include "./headers/MyView.h"
 
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
     MyView view;
     QPixmap pict("/home/ivan/QTProjects/TPproject/project_sprites/backgrounds/background1.jpg");
     view.setBackgroundBrush(QBrush(pict));
-    std::shared_ptr<Character> c;
+
     //заполнение статикой
     Staircase *staircase1 = new StaircaseLarge(&world, 50, 240);
     staircase1->render(scene);
@@ -109,8 +110,8 @@ int main(int argc, char** argv) {
     wall5->render(scene);
     Character *character1 = new Character(&world, 205, 270);
     scene->addItem(character1);
-    Gun* g = new Gun(&world,105,240,10);
-    scene->addItem(g);
+   // Gun* g = new Gun(&world,105,240,10);
+  //  scene->addItem(g);
     Borders *borders = new Borders(&world, worldWidth, worldHeight);
     borders->render(scene);
     //QMatrix matrix(0.5, 0, 0, 0.5, 0, 0);
