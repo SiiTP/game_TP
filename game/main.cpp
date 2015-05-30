@@ -46,6 +46,7 @@ using std::cout;
 //параметры мира, должны быть кратны 10, чтобы границы мира были ровными
 static const int32 worldWidth  = 1000;
 static const int32 worldHeight = 500;
+extern const  QString path = "/home/ivan/QTProjects/TPproject";
 b2World* WorldSinglton::world = NULL;
 
 int main(int argc, char** argv) {
@@ -57,7 +58,7 @@ int main(int argc, char** argv) {
     QApplication a(argc,argv);
     QGraphicsScene* scene= new QGraphicsScene(0, 0, worldWidth, worldHeight);
     MyView view;
-    QPixmap pict("/home/ivan/QTProjects/TPproject/project_sprites/backgrounds/background1.jpg");
+    QPixmap pict(path+"/project_sprites/backgrounds/background1.jpg");
     view.setBackgroundBrush(QBrush(pict));
     //заполнение статикой
     Staircase *staircase1 = new StaircaseLarge(  world, 50, 240);

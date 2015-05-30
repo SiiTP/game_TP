@@ -10,7 +10,6 @@ using std::cout;
 
 
 
-
 //библиотеки от box2D
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
@@ -21,10 +20,10 @@ using std::cout;
 #include "../headers/Weapons/weapon.h"
 #include "../headers/Weapons/WeaponFactory.h"
 #include "../headers/UserCharacter/CharacterStatic.h"
-
+extern QString path;
 Sprite::Sprite(QGraphicsRectItem* item) : drawitem(item) {
 
-    moveSpritesPath = "/home/ivan/QTProjects/TPproject/project_sprites/sprite/NormalGear/";
+    moveSpritesPath =path+"/project_sprites/sprite/NormalGear/";
     QDir qd(moveSpritesPath);
     QStringList qls;
 
