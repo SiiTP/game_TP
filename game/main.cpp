@@ -1,4 +1,4 @@
-static const float timeStep = 1.0f / 60.0f;
+
 
 //стандартные библиотеки
 #include <iostream>
@@ -35,16 +35,18 @@ using std::cout;
 #include "./headers/staticWorld/Floor.h"
 #include "./headers/staticWorld/Wall.h"
 #include "./headers/staticWorld/Staircase.h"
-#include "./headers/WorldSinglton.h"
+
 #include "./headers/Weapons/weapon.h"
 #include "./headers/Weapons/WeaponFactory.h"
 #include "./headers/UserCharacter/CharacterStatic.h"
 #include "./headers/MyContactListener.h"
 #include "./headers/MyView.h"
+#include "./headers/WorldSinglton.h"
+
 //параметры мира, должны быть кратны 10, чтобы границы мира были ровными
 static const int32 worldWidth  = 1000;
 static const int32 worldHeight = 500;
-
+b2World* WorldSinglton::world = NULL;
 
 int main(int argc, char** argv) {
 

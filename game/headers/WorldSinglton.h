@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WORLDSINGLTON_H
 #define WORLDSINGLTON_H
 
@@ -17,4 +18,4 @@ private:
     WorldSinglton() {}
     static b2World* world;
 };
-b2World* WorldSinglton::world = NULL;
+
