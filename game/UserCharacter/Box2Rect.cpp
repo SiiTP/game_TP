@@ -23,7 +23,7 @@ using std::cout;
 #include "../headers/Weapons/WeaponFactory.h"
 #include "../headers/UserCharacter/CharacterStatic.h"
 #include "../headers/MyContactListener.h"
-#include "../headers/MyView.h"
+
 static const float timeStep = 1.0f / 60.0f;
 MyRect::MyRect(b2World* world,float width,float height, float x ,float y,string name, bool isstatic) {
     this->name = name;

@@ -1,22 +1,15 @@
 //тандартные библиотеки
 #include <iostream>
-#include <string>
-#include <stdio.h>
-#include <vector>
-#include <memory>
+
 using std::string;
 using std::cout;
 
 //библиотеки от QT
 #include <QGraphicsRectItem>
-#include <QTransform>
-#include <QApplication>
+
 #include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QTimer>
-#include <QObject>
-#include <QMouseEvent>
-#include <QBrush>
+
+
 
 
 //библиотеки от box2D
@@ -26,18 +19,8 @@ using std::cout;
 //пользовательские файлы
 #include "../headers/ObjectInfo.h"
 #include "../headers/UserCharacter/Box2dRect.h"
-#include "../headers/UserCharacter/UserSinglton.h"
 #include "../headers/staticWorld/StaticCube.h"
-#include "../headers/staticWorld/StaticElement.h"
-#include "../headers/staticWorld/Borders.h"
-#include "../headers/staticWorld/Floor.h"
-#include "../headers/staticWorld/Wall.h"
-#include "../headers/staticWorld/Staircase.h"
-#include "../headers/Weapons/weapon.h"
-#include "../headers/Weapons/WeaponFactory.h"
-#include "../headers/UserCharacter/CharacterStatic.h"
-#include "../headers/MyContactListener.h"
-#include "../headers/MyView.h"
+
 StaticCube::StaticCube(b2World *world, float x, float y) {
     this->x = x;
     this->y = y;
