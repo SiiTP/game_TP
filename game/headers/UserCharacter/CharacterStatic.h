@@ -1,7 +1,6 @@
 
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
-#include "Box2dRect.h"
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -14,7 +13,7 @@
 #define LEFT 1
 #define RIGHT 0
 
-//
+//спрайт персонажа
 class Sprite {
 public:
     Sprite(QGraphicsRectItem* item) : drawitem(item) {
@@ -130,16 +129,17 @@ private:
 };
 
 
-
+// Наследуется от класса, который рисует квадрат, что является основой персонажа,
+// поверх чего рисуется спрайт
 class Character: public MyRect{
 public:
     Character(b2World* world,float x,float y) :MyRect(world,50,78,x,y,"character1") {
         setFlag(QGraphicsItem::ItemIsFocusable,true);
         setFocus();
         spr = new Sprite(this);
-
+        factory= new GunFactory();
     }
-
+    //обработка нажатия кнопок
      void keyPressEvent(QKeyEvent *event) {
 
         float32 impulsepower = 6.0f*jumpPower;
@@ -184,7 +184,7 @@ public:
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0) {
 
     }
-
+    //обработка отжатых кнопок
     void keyReleaseEvent(QKeyEvent *event) {
         switch (event->key()) {
             case 'D':
@@ -201,11 +201,28 @@ public:
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) {
-       // std::cout << event->pos().x() << ' ' << event->pos().y() << std::endl;
+        std::cout << event->pos().x() << ' ' << event->pos().y() << std::endl;
         setFocus();
+    }
+    //метод для стрельбы
+    // х,у - координаты мыши,
+    // сцена - куда отрисовывать
+    void attack(float x,float y,QGraphicsScene* scene) {
+        //std::cout << x << " " << y << std::endl;
+        Equipment* eq = factory->create();
+        float currentx = -body->GetWorldCenter().x*SCALETOPIXEL;
+        if (isLeftDirection) {//shoot left/right
+            currentx -= 25;
+        }else {
+            currentx += 25;
+        }
+        float currenty = -body->GetWorldCenter().y*SCALETOPIXEL - 20;//top left/right character
+
+
+        eq->performAction(currentx,currenty,x+50,y,scene);//50 - offset for left mouse
 
     }
-
+    //метод для обработки каждого кадра системы
     void advance(int phase) {
         MyRect::advance(phase);
         spr->setPos(x(),y());
@@ -227,6 +244,10 @@ public:
         }
 
     }
+    //По дефолту в конструкторе Gun, установка фабрики для оружия
+    void setWeapon(EquipmentFactory* fact) {
+        factory = fact;
+    }
 
 private:
     static const float precision = 0.02;
@@ -236,6 +257,7 @@ private:
     bool inflight;
     float32 jumpPower = 1;
     Sprite* spr;
+    EquipmentFactory* factory;
 };
 
 
