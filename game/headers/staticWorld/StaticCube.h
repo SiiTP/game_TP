@@ -1,4 +1,7 @@
 //простой кубик
+#include <memory>
+using std::shared_ptr;
+class ObjectInfo;
 class StaticCube : public QGraphicsRectItem {
     public:
         StaticCube(b2World *world, float x, float y) ;
@@ -28,6 +31,7 @@ private:
         b2Body *cubeBody;
         QGraphicsPixmapItem *cubePicture;
         static constexpr float size = 20;
+        shared_ptr<ObjectInfo> info;
 };
 
 

@@ -3,7 +3,7 @@ class StaticElement {
 
 public:
     void render(QGraphicsScene *scene);
-    ~StaticElement();
+    virtual ~StaticElement();
 protected:
     std::vector<StaticCube*> cubes;
     // ~StaticElement() {}; //делает класс абстрактным

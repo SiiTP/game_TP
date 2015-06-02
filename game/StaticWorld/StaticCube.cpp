@@ -1,9 +1,9 @@
 //тандартные библиотеки
 #include <iostream>
-
+#include <memory>
 using std::string;
 using std::cout;
-
+using std::shared_ptr;
 //библиотеки от QT
 #include <QGraphicsRectItem>
 
@@ -25,8 +25,8 @@ StaticCube::StaticCube(b2World *world, float x, float y) {
     this->x = x;
     this->y = y;
     //определение тела
-    b2BodyDef *cubeDef = new b2BodyDef();
-    cubeDef->position.Set(-x / MetrKoefficient, -y / MetrKoefficient);
+    shared_ptr<b2BodyDef >cubeDef ( new b2BodyDef());
+    cubeDef.get()->position.Set(-x / MetrKoefficient, -y / MetrKoefficient);
     setPos(x, y); //отрисовка будет осуществляться в этой позиции
 
     //оболочка
@@ -34,20 +34,20 @@ StaticCube::StaticCube(b2World *world, float x, float y) {
     cubeShape.SetAsBox(size / MetrKoefficient / 2, size / MetrKoefficient / 2);
 
     //физические свойства
-    b2FixtureDef *cubeFixt = new b2FixtureDef();
-    cubeFixt->shape = &cubeShape;
-    cubeFixt->friction = 0.5f;
-    cubeFixt->density  = 1.0f;
+    shared_ptr<b2FixtureDef> cubeFixt ( new b2FixtureDef());
+    cubeFixt.get()->shape = &cubeShape;
+    cubeFixt.get()->friction = 0.5f;
+    cubeFixt.get()->density  = 1.0f;
 
     //для обработки столкновений
-    ObjectInfo *info = new ObjectInfo("cube");
-    info->isCube = true;
-    cubeFixt->userData = info;
+    info =shared_ptr<ObjectInfo>( new ObjectInfo("cube"));
+    info.get()->isCube = true;
+    cubeFixt->userData = info.get();
     //__________________________
 
     //добавление в мир
-    cubeBody = world->CreateBody(cubeDef);
-    cubeBody->CreateFixture(cubeFixt);
+    cubeBody = world->CreateBody(cubeDef.get());
+    cubeBody->CreateFixture(cubeFixt.get());
 
     setBrush(QBrush(QColor(Qt::red)));
 
