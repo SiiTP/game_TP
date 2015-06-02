@@ -8,6 +8,7 @@
 #include <memory>
 using std::string;
 using std::cout;
+using std::shared_ptr;
 
 //библиотеки от QT
 #include <QGraphicsRectItem>

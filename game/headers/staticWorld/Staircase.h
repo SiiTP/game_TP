@@ -18,7 +18,7 @@ protected:
     float y;
     b2Body *staircasePolygon;
     QGraphicsPixmapItem *staircasePicture;
-    static const float MetrKoefficient = 50.0f;
+    static constexpr float MetrKoefficient = 50.0f;
     Staircase(b2World *world, float x, float y, float height);
 };
 

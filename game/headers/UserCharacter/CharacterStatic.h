@@ -79,7 +79,7 @@ public:
     void setWeapon(EquipmentFactory* fact);
 
 private:
-    static const float precision = 0.02;
+    static constexpr float precision = 0.02;
     bool isLeftDirection;
     b2Vec2 bv;
     float speed = 1;

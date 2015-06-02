@@ -30,7 +30,7 @@ public:
     void performAction(float beginx,float beginy,float endx,float endy,QGraphicsScene* scene);
 
 private:
-    static const float gunbulletRadius = 10;
+    static constexpr float gunbulletRadius = 10;
     int damage;
 };
 

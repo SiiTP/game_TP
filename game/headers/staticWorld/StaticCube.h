@@ -24,10 +24,10 @@ class StaticCube : public QGraphicsRectItem {
 private:
         float x;
         float y;
-        static const float MetrKoefficient = 50.0f;
+        static constexpr float MetrKoefficient = 50.0f;
         b2Body *cubeBody;
         QGraphicsPixmapItem *cubePicture;
-        static const float size = 20;
+        static constexpr float size = 20;
 };
 
 

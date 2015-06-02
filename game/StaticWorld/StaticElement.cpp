@@ -36,3 +36,8 @@ void StaticElement::render(QGraphicsScene *scene) {
         //scene->addItem(cubes[i]);
     }
 }
+StaticElement::~StaticElement() {
+    for(int i = 0; i< cubes.size(); ++i) {
+        delete cubes[i];
+    }
+}
