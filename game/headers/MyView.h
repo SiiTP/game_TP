@@ -4,15 +4,15 @@ public:
     void mousePressEvent(QMouseEvent *event){
       //std::cout << event->x() << ' ' << event->y() << std::endl;
        if (user != NULL) {
-          user->attack(event->x(),event->y(),scene());
+          user.get()->attack(event->x(),event->y(),scene());
        }
        if (user->hasFocus() != true) {
-           user->setFocus();
+           user.get()->setFocus();
        }
     }
-    void setUser(Character* c) {
+    void setUser(shared_ptr<Character> c) {
         user = c;
     }
 private:
-    Character* user;
+    shared_ptr<Character> user;
 };
