@@ -1,0 +1,4 @@
+#ifndef USERSINGLTON_H
+#define USERSINGLTON_H
+
+#endif // USERSINGLTON_H

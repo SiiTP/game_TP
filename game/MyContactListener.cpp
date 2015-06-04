@@ -1,25 +1,24 @@
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
+//тандартные библиотеки
+#include <iostream>
+using std::string;
+using std::cout;
 
-//попытка сравнивать типы через шаблоны, не удаляй пока
-/*template <class T1, class T2>
-struct Same_types {
-    enum {value = 0};
-};
-template <class T>
-struct Same_types<T, T> {
-    enum {value = 1};
-//    Same_types(T type1, T type2) {
-//        value = 1;
-//    }
+//библиотеки от QT
+#include <QGraphicsRectItem>
 
-//    bool same_types() {
-//        return value;
-//    }
-};*/
+//библиотеки от box2D
+#include <Box2D/Box2D.h>
+#include <Box2D/Dynamics/b2World.h>
 
-class MyContactListener : public b2ContactListener {
-public:
-void BeginContact(b2Contact *contact) {
+//пользовательские файлы
+#include "./headers/ObjectInfo.h"
+#include "./headers/UserCharacter/Box2dRect.h"
+#include "./headers/Weapons/weapon.h"
+#include "./headers/Weapons/WeaponFactory.h"
+#include "./headers/UserCharacter/CharacterStatic.h"
+#include "./headers/MyContactListener.h"
+
+void MyContactListener::BeginContact(b2Contact *contact) {
    b2Fixture *objA = contact->GetFixtureA();
    b2Fixture *objB = contact->GetFixtureB();
    ObjectInfo *infoA = (ObjectInfo*)objA->GetUserData();
@@ -43,7 +42,7 @@ void BeginContact(b2Contact *contact) {
    }
 }
 
-void EndContact(b2Contact *contact) {
+void MyContactListener::EndContact(b2Contact *contact) {
     //cout << "End contact" << endl;
     b2Fixture *objA = contact->GetFixtureA();
     b2Fixture *objB = contact->GetFixtureB();
@@ -62,4 +61,3 @@ void EndContact(b2Contact *contact) {
         infoB->characterInStaircase = false;
     }
 }
-};
