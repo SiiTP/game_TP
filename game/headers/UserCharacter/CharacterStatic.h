@@ -1,4 +1,4 @@
-
+#include <memory>
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
 
@@ -14,6 +14,7 @@
 #define LEFT 1
 #define RIGHT 0
 
+using std::shared_ptr;
 //спрайт персонажа
 //На входе дается квадрат персонажа, поверх которого орисовывается спрайт
 //Персонаж на действия пользователя вызывает методы спрайта, который сам определяет как отрисовывать
@@ -60,7 +61,7 @@ public:
     Character(b2World* world,float x,float y) :MyRect(world,50,78,x,y,"character1") {
         setFlag(QGraphicsItem::ItemIsFocusable,true);
         setFocus();
-        spr = new Sprite(this);
+        spr = shared_ptr<Sprite>(new Sprite(this));
         factory= new GunFactory(1,1);
     }
     //обработка нажатия кнопок
@@ -86,7 +87,7 @@ private:
     float speed = 1;
     bool inflight;
     float32 jumpPower = 1;
-    Sprite* spr;
+    shared_ptr<Sprite> spr;
     EquipmentFactory* factory;
 };
 

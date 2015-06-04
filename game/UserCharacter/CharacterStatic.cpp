@@ -199,21 +199,21 @@ void Character::attack(float x,float y,QGraphicsScene* scene) {
 
 void Character::advance(int phase) {
     MyRect::advance(phase);
-    spr->setPos(x(),y());
+    spr.get()->setPos(x(),y());
     if (info -> characterInStaircase == false) {
         body->SetType(b2_dynamicBody); //если не на лестнице персонаж
     }
     if (fabs(body->GetLinearVelocity().y)>precision && info -> characterInStaircase == false) {
-        spr->jump(isLeftDirection);
+        spr.get()->jump(isLeftDirection);
         inflight = true;
     }
     else {
         inflight = false;
         if (fabs(bv.x) > 0) {
             //cout << bv.x << endl;
-            spr->move(isLeftDirection);
+            spr.get()->move(isLeftDirection);
         }else {
-            spr->stand(isLeftDirection);
+            spr.get()->stand(isLeftDirection);
         }
     }
 

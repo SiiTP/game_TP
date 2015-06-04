@@ -3,7 +3,7 @@
 class Borders : public StaticElement {
 public:
     Borders(b2World *world, float width, float height);
-    //~Borders() {};
+    ~Borders() {};
 private:
     float widthBorders;
     float heightBorders;
