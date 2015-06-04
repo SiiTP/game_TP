@@ -1,4 +1,4 @@
-#include <memory>
+    #include <memory>
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
 
@@ -44,7 +44,7 @@ private:
 
     QGraphicsPixmapItem* qgp;
     QString moveSpritesPath;
-    long lastchange = 0;
+    long long lastchange = 0;
 
 
 };
@@ -86,7 +86,7 @@ private:
     b2Vec2 bv;
     float speed = 1;
     bool inflight;
-    float32 jumpPower = 1;
+    float32 jumpPower = 2;
     shared_ptr<Sprite> spr;
     EquipmentFactory* factory;
 };

@@ -36,9 +36,7 @@ void MyContactListener::BeginContact(b2Contact *contact) {
        const b2Vec2 vec2 = body2->GetPosition();
        cout << "CharacterPosition : (" << vec2.x * 50 << " : " << vec2.y * 50 << ")\n";
        //_________________________________________________________________________
-
        infoB->setCharacterInStaircase(true);
-
    }
 }
 

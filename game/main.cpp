@@ -48,7 +48,6 @@ static const int32 worldHeight = 500;
 
 extern const  QString path = "/home/ivan/TP_GameProject_CPP";
 
-
 int main(int argc, char** argv) {
 
     b2World* world = WorldSinglton::instance();
