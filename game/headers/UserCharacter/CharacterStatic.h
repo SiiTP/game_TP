@@ -86,7 +86,7 @@ private:
     b2Vec2 bv;
     float speed = 1;
     bool inflight;
-    float32 jumpPower = 2;
+    float32 jumpPower = 1;
     shared_ptr<Sprite> spr;
     EquipmentFactory* factory;
 };
