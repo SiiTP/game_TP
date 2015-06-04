@@ -24,7 +24,7 @@ using std::cout;
 #include "headers/staticWorld/StaticCube.h"
 #include "headers/staticWorld/StaticElement.h"
 
-Borders::Borders(b2World *world, float width, float height){
+Borders::Borders(b2World *world, float width, float height) {
     widthBorders = width;
     heightBorders = height;
     StaticCube *a;

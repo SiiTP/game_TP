@@ -13,8 +13,6 @@ class StaticCube : public QGraphicsRectItem {
     public:
         StaticCube(b2World *world, float x, float y) ;
 
-        StaticCube(){};
-
         float getX() {
             return x;
         }
@@ -38,7 +36,6 @@ private:
         b2Body *cubeBody;
         QGraphicsPixmapItem *cubePicture;
         static constexpr float size = 20;
-
         shared_ptr<ObjectInfo> info;
 };
 

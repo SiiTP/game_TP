@@ -24,6 +24,7 @@ using std::cout;
 
 extern QString path;
 void StaticElement::render(QGraphicsScene *scene) {
+
     for (size_t i = 0; i < cubes.size(); ++i) {
         float size = cubes[i]->getSize();
         float x = cubes[i]->getX();

@@ -4,13 +4,10 @@
 using std::string;
 using std::cout;
 using std::shared_ptr;
+
 //библиотеки от QT
 #include <QGraphicsRectItem>
-
 #include <QGraphicsScene>
-
-
-
 
 //библиотеки от box2D
 #include <Box2D/Box2D.h>
