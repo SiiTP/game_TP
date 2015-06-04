@@ -120,14 +120,14 @@ void Character::keyPressEvent(QKeyEvent *event) {
    float32 impulsepower = 6.0f*jumpPower;
    if (inflight == false) {
        if (event->key() == 'S') { //движение вниз
-           if (info->characterInStaircase == true) {
+           if (info->getCharacterInStaircase() == true) {
                body->SetType(b2_kinematicBody);
                body->SetLinearVelocity(b2Vec2(0, -0.5 * impulsepower));
            }
        }
        if (event->key() == 'W') {
 
-           if (info->characterInStaircase == true) {
+           if (info->getCharacterInStaircase() == true) {
                cout << "character is kinematic body\n";
                body->SetType(b2_kinematicBody);
                body->SetLinearVelocity(b2Vec2(0, 0.5 * impulsepower)); //кинематике надо скорость задавать а не импульс
@@ -200,10 +200,10 @@ void Character::attack(float x,float y,QGraphicsScene* scene) {
 void Character::advance(int phase) {
     MyRect::advance(phase);
     spr.get()->setPos(x(),y());
-    if (info -> characterInStaircase == false) {
+    if (info -> getCharacterInStaircase() == false) {
         body->SetType(b2_dynamicBody); //если не на лестнице персонаж
     }
-    if (fabs(body->GetLinearVelocity().y)>precision && info -> characterInStaircase == false) {
+    if (fabs(body->GetLinearVelocity().y)>precision && info -> getCharacterInStaircase() == false) {
         spr.get()->jump(isLeftDirection);
         inflight = true;
     }

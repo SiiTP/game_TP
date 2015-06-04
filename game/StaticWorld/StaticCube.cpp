@@ -41,7 +41,7 @@ StaticCube::StaticCube(b2World *world, float x, float y) {
 
     //для обработки столкновений
     info =shared_ptr<ObjectInfo>( new ObjectInfo("cube"));
-    info.get()->isCube = true;
+    info.get()->setIsCube(true);
     cubeFixt->userData = info.get();
     //__________________________
 

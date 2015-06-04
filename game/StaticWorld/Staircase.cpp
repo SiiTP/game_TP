@@ -42,7 +42,7 @@ Staircase::Staircase(b2World *world, float x, float y, float height) {
 
     //для обработки столкновений
     ObjectInfo *info = new ObjectInfo("staircase");
-    info->isStaircase = true;
+    info->setIsStaircase(true);
     staircaseFixt->userData = info;
     //__________________________
 

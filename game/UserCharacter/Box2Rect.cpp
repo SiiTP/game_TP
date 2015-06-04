@@ -48,7 +48,7 @@ MyRect::MyRect(b2World* world,float width,float height, float x ,float y,string 
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.5f;
     //для обработки столкновений
-    info->isCharacter = true;
+    info->setIsCharacter(true);
     fixtureDef.userData = info;
     //__________________________
 

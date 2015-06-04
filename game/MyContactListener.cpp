@@ -25,7 +25,7 @@ void MyContactListener::BeginContact(b2Contact *contact) {
    ObjectInfo *infoB = (ObjectInfo*)objB->GetUserData();
 
    //лестницы создавались раньше персонажа, поэтому лестница - всегда объект А, позже сделаю полноценную проверку
-   if (infoA->isStaircase && infoB->isCharacter) {
+   if (infoA->getIsStaircase() && infoB->getIsCharacter()) {
        cout << "collision staircase + character\n";
 
        //эхо печать, кстати по фикстуру можно само тело получать__________________
@@ -37,7 +37,7 @@ void MyContactListener::BeginContact(b2Contact *contact) {
        cout << "CharacterPosition : (" << vec2.x * 50 << " : " << vec2.y * 50 << ")\n";
        //_________________________________________________________________________
 
-       infoB->characterInStaircase = true;
+       infoB->setCharacterInStaircase(true);
 
    }
 }
@@ -50,7 +50,7 @@ void MyContactListener::EndContact(b2Contact *contact) {
     ObjectInfo *infoB = (ObjectInfo*)objB->GetUserData();
     //cout << "type of object A : " << infoA->objectType << endl;
     //cout << "type of object B : " << infoB->objectType << endl;
-    if (infoA->isStaircase && infoB->isCharacter) {
+    if (infoA->getIsStaircase() && infoB->getIsCharacter()) {
         cout << "END collision staircase + character\n";
         b2Body *body1 = objA->GetBody();
         const b2Vec2 vec1 = body1->GetPosition();
@@ -58,6 +58,6 @@ void MyContactListener::EndContact(b2Contact *contact) {
         b2Body *body2 = objB->GetBody();
         const b2Vec2 vec2 = body2->GetPosition();
         cout << "CharacterPosition : (" << vec2.x * 50 << " : " << vec2.y * 50 << ")\n";
-        infoB->characterInStaircase = false;
+        infoB->setCharacterInStaircase(false);
     }
 }

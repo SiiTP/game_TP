@@ -30,7 +30,7 @@ Gun::Gun(){
         fixtureDef.density = 1.11f;
         fixtureDef.friction = 0.5f;
         ObjectInfo *info = new ObjectInfo("bullet");
-        info->isCube = true;
+        info->setIsCube(true);
         fixtureDef.userData = info;
         fixturedef = fixtureDef;
 

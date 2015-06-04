@@ -2,8 +2,13 @@
 
 //простой кубик
 #include <memory>
+#include "headers/ObjectInfo.h"
+#include <QGraphicsRectItem>
+#include <Box2D/Box2D.h>
+#include <Box2D/Dynamics/b2World.h>
+
 using std::shared_ptr;
-class ObjectInfo;
+
 class StaticCube : public QGraphicsRectItem {
     public:
         StaticCube(b2World *world, float x, float y) ;
