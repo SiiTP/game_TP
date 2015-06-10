@@ -1,9 +1,11 @@
 //тандартные библиотеки
 #include <iostream>
+#include <memory>
 
 
 using std::string;
 using std::cout;
+using std::shared_ptr;
 
 //библиотеки от QT
 #include <QGraphicsRectItem>
@@ -46,8 +48,9 @@ MyRect::MyRect(b2World* world,float width,float height, float x ,float y,string 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.5f;
+    fixtureDef.friction = 0.9f;
     //для обработки столкновений
+    info = new ObjectInfo("character");
     info->setIsCharacter(true);
     fixtureDef.userData = info;
     //__________________________

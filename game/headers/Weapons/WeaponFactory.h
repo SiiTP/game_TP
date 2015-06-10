@@ -1,9 +1,5 @@
 #ifndef WEAPONPROTOTYPE_H
 #define WEAPONPROTOTYPE_H
-
-#endif // WEAPONPROTOTYPE_H
-
-
 class EquipmentFactory {
 public:
     int getMagazine() { return magazine;}
@@ -22,4 +18,8 @@ public:
         return new Gun();
     }
 };
+#endif // WEAPONPROTOTYPE_H
+
+
+
 

@@ -37,9 +37,9 @@ StaticCube::StaticCube(b2World *world, float x, float y) {
     cubeFixt.get()->density  = 1.0f;
 
     //для обработки столкновений
-    info =shared_ptr<ObjectInfo>( new ObjectInfo("cube"));
-    info.get()->setIsCube(true);
-    cubeFixt->userData = info.get();
+    info = new ObjectInfo("cube");
+    info->setIsCube(true);
+    cubeFixt->userData = info;
     //__________________________
 
     //добавление в мир

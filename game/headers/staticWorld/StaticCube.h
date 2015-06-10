@@ -36,7 +36,7 @@ private:
         b2Body *cubeBody;
         QGraphicsPixmapItem *cubePicture;
         static constexpr float size = 20;
-        shared_ptr<ObjectInfo> info;
+        ObjectInfo *info;
 };
 
 

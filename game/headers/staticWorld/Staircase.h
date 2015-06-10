@@ -19,6 +19,7 @@ protected:
     QGraphicsPixmapItem *staircasePicture;
     static constexpr float MetrKoefficient = 50.0f;
     Staircase(b2World *world, float x, float y, float height);
+    ObjectInfo *info;
 };
 
 

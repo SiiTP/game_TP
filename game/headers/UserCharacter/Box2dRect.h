@@ -1,3 +1,7 @@
+#pragma once
+#include <QGraphicsRectItem>
+#include <memory>
+using std::shared_ptr;
 #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0)
 const float SCALETOPIXEL = 50;
 //const float32 timeStep = 1.0f/60.0f;
@@ -14,7 +18,7 @@ public:
     void advance(int phase);
 protected:
     b2Body* body;
-    ObjectInfo *info = new ObjectInfo("character");
+    ObjectInfo* info;
 private:
     int xx,yy;
     b2World* world;

@@ -15,11 +15,9 @@ using std::cout;
 #include <Box2D/Dynamics/b2World.h>
 
 //пользовательские файлы
-#include "../headers/ObjectInfo.h"
-#include "../headers/UserCharacter/Box2dRect.h"
-#include "../headers/Weapons/weapon.h"
-#include "../headers/Weapons/WeaponFactory.h"
 #include "../headers/UserCharacter/CharacterStatic.h"
+
+
 extern QString path;
 Sprite::Sprite(QGraphicsRectItem* item) : drawitem(item) {
 
@@ -116,61 +114,62 @@ void Sprite::fire() {
 
 
 void Character::keyPressEvent(QKeyEvent *event) {
-
-   float32 impulsepower = 6.0f*jumpPower;
-   if (inflight == false) {
-       if (event->key() == 'S') { //движение вниз
-           if (info->getCharacterInStaircase() == true) {
-               body->SetType(b2_kinematicBody);
-               body->SetLinearVelocity(b2Vec2(0, -0.5 * impulsepower));
+       if (info->getCharacterInStaircase()) {
+           strategyOfAdvance = new LogicInStaircase();
+       } else {
+           if (charact->body->GetLinearVelocity().y == 0) {
+               strategyOfAdvance = new LogicInFloor();
+           } else {
+               strategyOfAdvance = new LogicInFlight();
            }
        }
+       if (event->key() == 'S') { //движение вниз
+           strategyOfAdvance->pressS(charact);
+           /*if (info->getCharacterInStaircase() == true) {
+               body->SetType(b2_kinematicBody);
+               body->SetLinearVelocity(b2Vec2(0, -0.5 * impulsepower));
+           }*/
+       }
        if (event->key() == 'W') {
-
-           if (info->getCharacterInStaircase() == true) {
+           strategyOfAdvance->pressW(charact);
+           /*if (info->getCharacterInStaircase() == true) {
                cout << "character is kinematic body\n";
                body->SetType(b2_kinematicBody);
                body->SetLinearVelocity(b2Vec2(0, 0.5 * impulsepower)); //кинематике надо скорость задавать а не импульс
                //body->ApplyLinearImpulse(b2Vec2(0,impulsepower),body->GetWorldCenter(),true);
-               bv.x = 0;
+               charact->bv.x = 0;
            }
            else {
-               cout << "character is dynamic body\n";
-               body->SetType(b2_dynamicBody);
-               body->ApplyLinearImpulse(b2Vec2(0,impulsepower),body->GetWorldCenter(),true);
-               bv.x = 0;
-           }
 
-       }else {
-
-           if (event->key() == 'A') {
-               bv.x = 6.0f*speed;
-               isLeftDirection = LEFT;
-               body->SetLinearVelocity(bv);
-           }
-           if (event->key() == 'D') {
-               isLeftDirection = RIGHT;
-               bv.x = -6.0f*speed;
-               body->SetLinearVelocity(bv);
-           }
+           }*/
        }
-   }
+
+       if (event->key() == 'A') {
+          strategyOfAdvance->pressA(charact);
+          isLeftDirection = LEFT;
+       }
+       if (event->key() == 'D') {
+          strategyOfAdvance->pressD(charact);
+          isLeftDirection = RIGHT;
+       }
+       strategyOfAdvance->action(charact);
 }
 
 void Character::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) {
 
 }
 void Character::keyReleaseEvent(QKeyEvent *event) {
-    switch (event->key()) {
-        case 'D':
-        case 'A':
-            if (inflight == false) {
-                body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
-                bv.x = 0;
-            }
-            break;
-        case 'W':
-             break;
+    if (event->key() == 'S') {
+        strategyOfAdvance->pressSend(charact);
+    }
+    if (event->key() == 'W') {
+        strategyOfAdvance->pressWend(charact);
+    }
+    if (event->key() == 'A') {
+        strategyOfAdvance->pressAend(charact);
+    }
+    if (event->key() == 'D') {
+        strategyOfAdvance->pressDend(charact);
     }
 
 }
@@ -200,19 +199,15 @@ void Character::attack(float x,float y,QGraphicsScene* scene) {
 void Character::advance(int phase) {
     MyRect::advance(phase);
     spr.get()->setPos(x(),y());
-    if (info -> getCharacterInStaircase() == false) {
-        body->SetType(b2_dynamicBody); //если не на лестнице персонаж
-    }
     if (fabs(body->GetLinearVelocity().y)>precision && info -> getCharacterInStaircase() == false) {
         spr.get()->jump(isLeftDirection);
-        inflight = true;
-    }
-    else {
-        inflight = false;
-        if (fabs(bv.x) > 0) {
+        //inflight = true;
+    } else {
+       //inflight = false;
+        if (fabs(charact->bv.x) > 0) {
             //cout << bv.x << endl;
             spr.get()->move(isLeftDirection);
-        }else {
+        } else {
             spr.get()->stand(isLeftDirection);
         }
     }

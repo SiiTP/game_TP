@@ -22,6 +22,12 @@ public:
     bool getCharacterInStaircase() {
         return characterInStaircase;
     }
+    bool getCharacterInBox() {
+        return characterInBox;
+    }
+    string getObjectType() {
+        return objectType;
+    }
 
     void setIsStaircase(bool v) {
         isStaircase = v;
@@ -35,11 +41,16 @@ public:
     void setCharacterInStaircase(bool v) {
         characterInStaircase = v;
     }
+    void setCharacterInBox(bool v) {
+        v = characterInBox;
+    }
+
 private:
     string objectType;
     bool isStaircase;
     bool isCube;
     bool isCharacter;
     bool characterInStaircase;
+    bool characterInBox;
 
 };

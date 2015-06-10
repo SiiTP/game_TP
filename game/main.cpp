@@ -42,9 +42,11 @@ using std::shared_ptr;
 #include "./headers/MyView.h"
 #include "./headers/WorldSinglton.h"
 
+
 //параметры мира, должны быть кратны 10, чтобы границы мира были ровными
 static const int32 worldWidth  = 1000;
 static const int32 worldHeight = 500;
+
 
 extern const  QString path = "/home/ivan/TP_GameProject_CPP";
 
@@ -65,7 +67,7 @@ int main(int argc, char** argv) {
     LevelBuilder *builder = new LevelBuilder_1();
     builder->build(world, scene);
 
-    shared_ptr<Character> character1 ( new Character(  world, 205, 270));
+    shared_ptr<Character> character1 (new Character(world, 205, 270));
     scene.get()->addItem(character1.get());
    // Gun* g = new Gun(  world,105,240,10);
   //  scene->addItem(g);

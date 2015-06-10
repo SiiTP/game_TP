@@ -2,7 +2,6 @@
 #define WEAPON_H
 #include <QGraphicsEllipseItem>
 #include <Box2D/Box2D.h>
-#endif // WEAPON_H
 
 class Equipment {
 public:
@@ -33,4 +32,7 @@ private:
     static constexpr float gunbulletRadius = 10;
     int damage;
 };
+#endif // WEAPON_H
+
+
 

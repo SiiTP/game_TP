@@ -1,4 +1,5 @@
-    #include <memory>
+#pragma once
+#include <memory>
 #include <Box2D/Box2D.h>
 #include <Box2D/Dynamics/b2World.h>
 
@@ -11,10 +12,25 @@
 #include <QDateTime>
 #include <QDir>
 #include <iostream>
+
+#include "./headers/UserCharacter/Logic.h"
+#include "./headers/ObjectInfo.h"
+#include "./headers/UserCharacter/Box2dRect.h"
+#include "./headers/Weapons/weapon.h"
+#include "./headers/Weapons/WeaponFactory.h"
+
 #define LEFT 1
 #define RIGHT 0
 
 using std::shared_ptr;
+
+struct Characteristics {
+    b2Body *body;
+    b2Vec2 bv;
+    float speed = 1;
+    float32 jumpPower = 1;
+
+};
 //спрайт персонажа
 //На входе дается квадрат персонажа, поверх которого орисовывается спрайт
 //Персонаж на действия пользователя вызывает методы спрайта, который сам определяет как отрисовывать
@@ -63,6 +79,11 @@ public:
         setFocus();
         spr = shared_ptr<Sprite>(new Sprite(this));
         factory= new GunFactory(1,1);
+        charact = new Characteristics();
+        charact->body = this->body;
+        charact->jumpPower = 1;
+        charact->speed = 1;
+        strategyOfAdvance = new LogicInFlight();
     }
     //обработка нажатия кнопок
      void keyPressEvent(QKeyEvent *event);
@@ -83,12 +104,11 @@ public:
 private:
     static constexpr float precision = 0.02;
     bool isLeftDirection;
-    b2Vec2 bv;
-    float speed = 1;
     bool inflight;
-    float32 jumpPower = 1;
     shared_ptr<Sprite> spr;
     EquipmentFactory* factory;
+    Characteristics *charact;
+    Logic *strategyOfAdvance;
 };
 
 
